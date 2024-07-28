@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My App -> Sistema de Cadastro</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="path/to/controller.js"></script>
+  <script src="scripts/libs/angular.js"></script>
+  <script src="scripts/libs/angular-ui-router.js"></script>
+  <script src="scripts/libs/ui-bootstrap-tpls-0.12.1.min.js"></script>
+  <script src="scripts/myApp.js"></script>
+  <script src="scripts/sendingData.js"></script>
+  <script src="scripts/libis/bootstrap.js"></script>
+  <script src="scripts/myController.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="UsuarioController">
+  <div class="container">
+    <br>
+    <header>
+      <h1 style="text-align: center; color:rgb(231, 6, 130)">
+        Meu Aplicativo - Sistema de Cadastro - AngularJs
+      </h1>
+    </header>
+<br><br><br>
+    <form name="formCadastro" ng-submit="submitForm()">
+      <!-- Campos do formulário -->
+      <div>
+        <label for="nome">Nome Completo:</label>
+        <input type="text" ng-model="usuario.nome" name="nome" required>
+      </div>
+      <br><br><br>
+      <div>
+        <label for="curso">Curso Pretendido:</label>
+        <input type="text" ng-model="usuario.curso" name="curso" required>
+      </div><br>
+      <br><br>
+      <div>
+        <label for="email">E-mail:</label>
+        <input type="email" ng-model="usuario.email" name="email" required>
+      </div><br>
+      <br><br>
+      <div>
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input type="date" ng-model="usuario.dataNascimento" name="dataNascimento" required>
+      </div><br>
+      <br><br>
+      <button type="submit" ng-disabled="formCadastro.$invalid">Cadastrar</button>
+    </form> <br><br><br>
+
+    <footer class="container-fluid container-fixed-ig_footer">
+      <div class="copyright sm-text-center">
+        <p class="small no-margin pull-left sm-pull-reset">
+          <span class="hint-text">Copyright @ 2024</span>
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('UsuarioController', function($scope, $http) {
+        $scope.usuario = {};
+        $scope.submitForm = function() {
+          if ($scope.formCadastro.$valid) {
+            $http.post('/api/usuarios', $scope.usuario)
+              .then(function(response) {
+                console.log('Cadastro realizado!');
+              })
+              .catch(function(error) {
+                console.error('Erro ao cadastrar usuário:', error);
+              });
+          } else {
+            alert('Por favor, preencha todos os campos.');
+          }
+        };
+      });
+  </script>
+</body>
+</html>
+
+
